@@ -7,15 +7,29 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <button id="sizeButton">Grid Size</button>
     <div id="container"></div>
+
 </body>
 <script>
     const container = document.getElementById("container");
+    const sizeButton = document.getElementById("sizeButton");
 
-function eraseGrid(){
-    container.innerHTML="";
-}
+    let size = 0;
 
+    sizeButton.addEventListener("click", (event) => {
+        size = prompt("Size of grid: x*x, please enter x");
+        while(isNaN(size) || size<1 || size>128){
+            size = prompt("Please select a valid input (0<int>129)");
+        }
+
+        createGrid(size);
+    })
+
+
+    function eraseGrid(){
+        container.textContent="";
+    }
 
 function createGrid(size){
     eraseGrid();
@@ -36,8 +50,5 @@ function createGrid(size){
     }
 }
 
-createGrid(32);
-
-    
 </script>
 </html>
