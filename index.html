@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etch-a-Sketch</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div id="container"></div>
+</body>
+<script>
+    const container = document.getElementById("container");
+
+function eraseGrid(){
+    container.innerHTML="";
+}
+
+
+function createGrid(size){
+    eraseGrid();
+    container.style.gridTemplateColumns = `repeat(${size}, auto)`;
+        
+    for(let i=0; i< size; i++){
+        const row = document.createElement('div');
+        row.classList.add('rows');
+        container.appendChild(row);
+        for(let j=0; j<size; j++){
+            const column = document.createElement('div');
+            column.classList.add('columns');
+            row.appendChild(column);
+            column.addEventListener('mouseover', (event) => {
+                column.classList.add('clicked')
+            });
+        }
+    }
+}
+
+createGrid(32);
+
+    
+</script>
+</html>
