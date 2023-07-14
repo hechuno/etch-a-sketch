@@ -1,54 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Etch-a-Sketch</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
+
 <body>
     <button id="sizeButton">Grid Size</button>
+    <button id="clear">Clear</button>
+    <button id="eraser">Eraser</button>
     <div id="container"></div>
 
 </body>
 <script>
     const container = document.getElementById("container");
     const sizeButton = document.getElementById("sizeButton");
-
-    let size = 0;
+    const eraseButton = document.getElementById("eraser");
+    let size;
 
     sizeButton.addEventListener("click", (event) => {
         size = prompt("Size of grid: x*x, please enter x");
-        while(isNaN(size) || size<1 || size>128){
+        while (isNaN(size) || size < 1 || size > 128) {
             size = prompt("Please select a valid input (0<int>129)");
         }
 
         createGrid(size);
     })
 
+    clear.addEventListener("click", (event) => {
+        createGrid(size);
+    })
 
-    function eraseGrid(){
-        container.textContent="";
+    eraseButton.addEventListener("click", (event) => {
+        const isEraserActive = eraseButton.classList.toggle("active");
+        event.stopPropagation();
+    })
+
+    function eraseGrid() {
+        container.textContent = "";
     }
 
-function createGrid(size){
-    eraseGrid();
-    container.style.gridTemplateColumns = `repeat(${size}, auto)`;
-        
-    for(let i=0; i< size; i++){
-        const row = document.createElement('div');
-        row.classList.add('rows');
-        container.appendChild(row);
-        for(let j=0; j<size; j++){
-            const column = document.createElement('div');
-            column.classList.add('columns');
-            row.appendChild(column);
-            column.addEventListener('mouseover', (event) => {
-                column.classList.add('clicked')
-            });
+    function createGrid(size) {
+        eraseGrid();
+        container.style.gridTemplateColumns = `repeat(${size}, auto)`;
+
+        for (let i = 0; i < size; i++) {
+            const row = document.createElement('div');
+            row.classList.add('rows');
+            container.appendChild(row);
+            for (let j = 0; j < size; j++) {
+                const column = document.createElement('div');
+                column.classList.add('columns');
+                row.appendChild(column);
+                column.addEventListener('mouseover', changeColor);
+            }
         }
     }
-}
+
+    function changeColor() {
+        this.style.backgroundColor = "black";
+        if(eraseButton.classList.contains("active")){
+            this.style.backgroundColor = "white";
+        }
+    }
+
+
+
 
 </script>
+
 </html>
