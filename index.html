@@ -9,16 +9,33 @@
 </head>
 
 <body>
-    <button id="sizeButton">Grid Size</button>
-    <button id="clear">Clear</button>
-    <button id="eraser">Eraser</button>
-    <div id="container"></div>
-
+    <div id="page">
+        <div id="info">
+            <button id="sizeButton">Grid Size</button>
+            <button id="clear">Clear</button>
+            <button id="eraser">Eraser</button>
+        </div>
+        <div id="container"></div>
+    </div>
 </body>
 <script>
+    const page = document.getElementById("page");
+    const info = document.getElementById("info");
     const container = document.getElementById("container");
     const sizeButton = document.getElementById("sizeButton");
     const eraseButton = document.getElementById("eraser");
+    const sizeInfo = document.createElement('p');
+    const altKeyInstruction = document.createElement('p');
+
+    page.appendChild(info);
+    page.appendChild(container);
+    page.appendChild(altKeyInstruction);
+
+    sizeInfo.textContent = "size:";
+    info.appendChild(sizeInfo);
+
+    altKeyInstruction.textContent = "Psstt. You can move your cursor freely without drawing by pressing alt!";
+
     let size;
 
     sizeButton.addEventListener("click", (event) => {
@@ -36,6 +53,7 @@
 
     eraseButton.addEventListener("click", (event) => {
         const isEraserActive = eraseButton.classList.toggle("active");
+        eraseButton.classList.toggle("clicked");
         event.stopPropagation();
     })
 
@@ -55,20 +73,26 @@
                 const column = document.createElement('div');
                 column.classList.add('columns');
                 row.appendChild(column);
+
                 column.addEventListener('mouseover', changeColor);
+
             }
         }
+
+        sizeInfo.textContent = "size: " + size + " x " + size;
+
     }
 
     function changeColor() {
-        this.style.backgroundColor = "black";
-        if(eraseButton.classList.contains("active")){
+        if (event.altKey) {
+            return;
+        }
+        if (eraseButton.classList.contains("active")) {
             this.style.backgroundColor = "white";
         }
+        this.style.backgroundColor = "black";
+
     }
-
-
-
 
 </script>
 

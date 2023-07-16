@@ -18,3 +18,8 @@
     width: 480px;
     height: 480px;
 }
+
+.clicked{
+    color: white;
+    background-color: black;
+}
