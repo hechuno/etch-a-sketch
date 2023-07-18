@@ -14,6 +14,7 @@
             <button id="sizeButton">Grid Size</button>
             <button id="clear">Clear</button>
             <button id="eraser">Eraser</button>
+            <button id="onClick">onClick</button>
         </div>
         <div id="container"></div>
     </div>
@@ -24,19 +25,17 @@
     const container = document.getElementById("container");
     const sizeButton = document.getElementById("sizeButton");
     const eraseButton = document.getElementById("eraser");
-    const sizeInfo = document.createElement('p');
-    const altKeyInstruction = document.createElement('p');
+    const sizeInfo = document.createElement('p'); 
+    const onClickButton = document.getElementById("onClick");
 
     page.appendChild(info);
     page.appendChild(container);
-    page.appendChild(altKeyInstruction);
 
     sizeInfo.textContent = "size:";
     info.appendChild(sizeInfo);
 
-    altKeyInstruction.textContent = "Psstt. You can move your cursor freely without drawing by pressing alt!";
-
     let size;
+    let drawing = false;
 
     sizeButton.addEventListener("click", (event) => {
         size = prompt("Size of grid: x*x, please enter x");
@@ -52,7 +51,7 @@
     })
 
     eraseButton.addEventListener("click", (event) => {
-        const isEraserActive = eraseButton.classList.toggle("active");
+        eraseButton.classList.toggle("active");
         eraseButton.classList.toggle("clicked");
         event.stopPropagation();
     })
@@ -75,7 +74,10 @@
                 row.appendChild(column);
 
                 column.addEventListener('mouseover', changeColor);
-
+                if(onClick.classList.contains("active")){
+                column.addEventListener('mousedown', mouseWasDown);
+                column.addEventListener('mouseup', mouseWasUp);
+                }
             }
         }
 
@@ -83,14 +85,28 @@
 
     }
 
+    onClick.addEventListener("click", (event)=>{
+        onClick.classList.toggle("active");
+        onClick.classList.toggle("clicked");
+    })
+
+    function mouseWasDown()
+    {
+        drawing=true;
+    }
+
+    function mouseWasUp()
+    {
+        drawing=false;
+    }
+
     function changeColor() {
-        if (event.altKey) {
-            return;
-        }
         if (eraseButton.classList.contains("active")) {
             this.style.backgroundColor = "white";
         }
-        this.style.backgroundColor = "black";
+        else if (onClick.classList.contains("active") && drawing){
+            this.style.backgroundColor = "black";
+        }
 
     }
 
