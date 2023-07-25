@@ -52,9 +52,9 @@
     })
 
     eraseButton.addEventListener("click", (event) => {
-        const isEraserActive = eraseButton.classList.toggle("active");
+        eraseButton.classList.toggle("active");
         eraseButton.classList.toggle("clicked");
-        event.stopPropagation();
+        //event.stopPropagation();
     })
 
     function eraseGrid() {
@@ -89,9 +89,10 @@
         }
         if (eraseButton.classList.contains("active")) {
             this.style.backgroundColor = "white";
+        } else{
+            this.style.backgroundColor = "black";
         }
-        this.style.backgroundColor = "black";
-
+        
     }
 
 </script>
